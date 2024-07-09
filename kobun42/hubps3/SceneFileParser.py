@@ -71,12 +71,12 @@ class SceneFileParser:
         isFileValid = self.checkIfRootTagIsValid(xmlRoot)
         if not isFileValid:
             print("Scene file invalid! Ensure the file is a PlayStation Home scene file and that it is not corrupted.")
-            return
+            return []
          
         gameObjectFolder = self.findGameObjectFolderInXmlRoot(xmlRoot)
         if gameObjectFolder == None:
             print('Game Object folder missing or invalid.')
-            return
+            return []
             
         for child in gameObjectFolder:
         
