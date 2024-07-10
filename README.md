@@ -10,3 +10,5 @@ Intended to aid those who need a list of UUIDs in a scene file for any reason (u
 python main.py "PATH\TO\SCENEFILE.SCENE" [-f (all,sceneObjectOnly,luaGameOnly,arcadeGameOnly)] [-p]
 ```
 Run the script with the -h tag and nothing else to see a brief decription of the two switches currently available.
+
+Download using the Code button, don't download the scripts individually unless you know what the heck you're doing. Downloading main.py by itself won't work due to its' reliance on a module contained within the repo.
