@@ -66,6 +66,16 @@ class SceneFileParser:
             
         return False
 
+    def checkFolder(self, folder, objectTypeFilter):
+        for child in folder:
+            if self.isChildAGameObject(child, objectTypeFilter):
+                if not self.checkForUUIDdupes(child.attrib['uuid']):
+                    self.uuids.insert(len(self.uuids)-1, child.attrib['uuid'])
+                    
+            if self.isChildAFolder(child):
+                self.checkFolder(child, objectTypeFilter)
+            
+
     def getSceneXmlAndParse(self, sceneXml, objectTypeFilter='all'):
         xmlRoot = self.parseSceneXmlAndGetRoot(sceneXml)
         isFileValid = self.checkIfRootTagIsValid(xmlRoot)
@@ -78,16 +88,6 @@ class SceneFileParser:
             print('Game Object folder missing or invalid.')
             return []
             
-        for child in gameObjectFolder:
-        
-            if self.isChildAGameObject(child, objectTypeFilter):
-                if not self.checkForUUIDdupes(childFolder.attrib['uuid']):
-                    self.uuids.insert(len(self.uuids)-1, child.attrib['uuid'])
-        
-            if self.isChildAFolder(child):
-                for childFolder in child:
-                    if self.isChildAGameObject(childFolder, objectTypeFilter):
-                        if not self.checkForUUIDdupes(childFolder.attrib['uuid']):
-                            self.uuids.insert(len(self.uuids)-1, childFolder.attrib['uuid'])
+        self.checkFolder(gameObjectFolder, objectTypeFilter)
                         
         return self.uuids
