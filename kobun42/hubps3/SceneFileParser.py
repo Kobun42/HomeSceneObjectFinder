@@ -68,9 +68,18 @@ class SceneFileParser:
 
     def checkFolder(self, folder, objectTypeFilter):
         for child in folder:
+            #YANDEREDEV CODING YAAAAAAAAAAAAAAY
             if self.isChildAGameObject(child, objectTypeFilter):
-                if not self.checkForUUIDdupes(child.attrib['uuid']):
-                    self.uuids.insert(len(self.uuids)-1, child.attrib['uuid'])
+                if 'uuid' not in child.attrib:
+                    # Assume using game tag instead.
+                    if 'game' not in child.attrib:
+                        print("What the heck is this scene file? GIVE IT TO KOBUN42 SO HE CAN FIGURE THIS OUT!!!!!")
+                    else:
+                        if not self.checkForUUIDdupes(child.attrib['game']):
+                            self.uuids.insert(len(self.uuids)-1, child.attrib['game'])
+                else:
+                    if not self.checkForUUIDdupes(child.attrib['uuid']):
+                        self.uuids.insert(len(self.uuids)-1, child.attrib['uuid'])
                     
             if self.isChildAFolder(child):
                 self.checkFolder(child, objectTypeFilter)
